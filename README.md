@@ -1,4 +1,4 @@
-![pexels-athena-3417667.jpg](./Saved Pictures/pexels-athena-3417667.jpg)
+![pexels-athena-3417667.jpg](/Saved Pictures/pexels-athena-3417667.jpg)
 
 # MICROSOFT PROJECT
 
@@ -85,7 +85,7 @@
 
 ### How The Year Of The Movie Affects Performance Of Movie
 
-![download.avg.png](./Saved Pictures/download.avg.png)
+![download.avg.png](/Saved Pictures/download.avg.png)
 
 ##### Interpretation Of Average Worlwide Gross By Year Bar Graph
 
@@ -95,7 +95,7 @@
 
 ### Studio Effect On Performance Of Movies
 
-![download.studio2.png](./Saved Pictures/download.studio2.png)
+![download.studio2.png](/Saved Pictures/download.studio2.png)
 
 ##### Interpretation of results above
 
@@ -106,7 +106,7 @@
 
 ### Top 200 Movies
 
-![download.top200.png](./Saved Pictures/download.top200.png)
+![download.top200.png](/Saved Pictures/download.top200.png)
 
 ##### Interpretation of results above
 
@@ -120,7 +120,7 @@
 - It is calculated as the difference between a company's revenue (or sales) and the cost of goods sold (COGS), divided by revenue, expressed as a percentage.
 - It indicates how much of each dollar of sales is left after deducting the direct costs of producing the goods or services sold. It is an important indicator of a company's operating efficiency and profitability, as it shows the percentage of revenue that is available to cover operating expenses and generate profits.
 
-![download.gpm.png](./Saved Pictures/download.gpm.png)
+![download.gpm.png](/Saved Pictures/download.gpm.png)
 
 ##### Interpretation Of Gross Profit Margin Scatter Plot Graph
 
@@ -133,7 +133,7 @@
 - Return of investment is a financial metric that measures the profitability of an investment, typically expressed as a percentage.
 - It is a useful tool for making investment decisions, as it helps investors compare the potential profitability of different investment opportunities.
 
-![download.roi.png](./Saved Pictures/download.roi.png)
+![download.roi.png](/Saved Pictures/download.roi.png)
 
 ##### Interpretation Of ROI Scatter Plot Graph
 
@@ -144,7 +144,7 @@
 
 ### Histogram for Gross Profit Margin
 
-![hist1.png](./Saved Pictures/hist1.png)
+![hist1.png](/Saved Pictures/hist1.png)
 ##### Iinterpretation Of Gross Profit Margin Histogram
 
 - From the histogram, we see that the majority of movies have a GPM  between 50 and 100 peaking around 75. 
@@ -153,7 +153,7 @@
 
 ### Histogram for ROI
 
-![hist2.png](./Saved Pictures/hist2.png)
+![hist2.png](/Saved Pictures/hist2.png)
 
 ##### Interpretation Of ROI Histogram
 
@@ -183,7 +183,7 @@
 - Saved Pictures                       <- Images got from the code file
 - .gitignore                           <- The .gitignore file for the project
 - LICENSE.md                           <- The license for the project
-- Presentation.pdf                     <- Presentation of analysis in PDF format
+- Presentation_pdf.pdf                     <- Presentation of analysis in PDF format
 - README.md1                           <- Document for reviewing the project
 - student.ipynb                              <- Documentation of analysis of project in Jupyter Notebook
 
