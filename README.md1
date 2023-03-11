@@ -1,0 +1,422 @@
+# MICROSOFT PROJECT
+
+## Overview
+
+- Microsoft who do not have any knowledge in movie prodution, have queried a business problem to find out what makes a movie to perform well at the box office. Afer analysis of the data provided, I used various features to determine the solution to the business problem.
+- I used various metrics in order to get a better understanding of the analysis and also to be able to amptly answer the question and deliver recommendations to help Microsoft have strategies to use and know how to start a movie studio.
+- The metrics used were Gross Profit Margin and Return of Investment which were recommended to be the best metrics to use in analysis of the best performing movies.
+- After plotting several graphs comparing the Gross Profit Margin, Return of Investments, Top 200 movies, Year to the worldwide gross and domestic gross, I identified that:
+   - The best time to release a movie is late into the year as compared to early in the year.
+   - Microsoft could consult the subsidiary company to Walt disney, Buena Vista to get the best strategies on starting up a     successful movie studio.
+   - The Return of Investment is a better metric to use as compared to the Gross Profit Margin.
+   
+## Business Problem 
+
+- Microsoft has seen other companies creating original video content and they want to take a slice of the pie in the movie industry, by creating a new movie studio. However, they have no knowledge about creating movies. Thus, in order to solve this problem we have to answer the question:
+        * What films are performing the best at the box office?
+- From the article written by Vriety Magazine, https://variety.com/2023/data/news/global-box-office-in-2022-1235480594/, they used the domestic and worldwide gross to determine the answer to the question.
+- From this you can tell they could have used ROI as the metric measure to determine the effect of year release of movies on the perfomance of movies.
+- Return of Investment is a measure used to evaluate the efficiency and profitability of an investment, relative to its cost.
+- In order to further answer the question, I analysed numeric and non-numeric values which were:
+        * Year
+        * Top 200 movies
+        * Release date
+        * Gross Profit Margin
+        * Return of Investment
+        
+## Data Understanding
+
+- I examined the datasets The MovieDB, Box Office Mojo and The Numbers to get the data used for analysis.
+- Here I read into the datasets to get a better understanding of the appropriate datasets to use for my analysis.
+
+#### Load necessary libraries
+
+### Importing relevant libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+#### Ignore warnings
+import warnings
+warnings.filterwarnings('ignore')
+
+### Read into the datasets and examine the datasets
+
+- This helps with understanding the datasets chosen better so as to be able to determine and choose the datasets relevant to the analysis.
+- I assigned the datasets with approriate variable names so as to ease in the reading into them.
+
+### Box Office Mojo
+
+#### Load and read into the bom.movie_gross.csv file and display the data in the file
+bom_movies_df = pd.read_csv('Datasets/bom.movie_gross.csv')
+bom_movies_df
+
+#### Display the first five rows of the bom_movies_df dataframe 
+bom_movies_df.head()
+
+#### Display the last five rows of the bom_movies_df dataframe
+bom_movies_df.tail(5)
+
+#### Display the last five rows of the bom_movies_df dataframe
+bom_movies_df.tail(5)
+
+#### Look at the general bom_movies_df dataframe to understand the dimensionality of the dataset
+bom_movies_df.shape
+
+#### Display the type of data the bom_movies_df dataframe has and the data types used to store it
+bom_movies_df.info()
+
+#### Display the type of data the bom_movies_df dataframe has and the data types used to store it
+bom_movies_df.info()
+
+
+### The MovieDB
+
+#### Load and read into the tmdb.movies.csv file and display the data in the dataframe
+tmdb_movies_df = pd.read_csv('Datasets/tmdb.movies.csv', index_col=0)
+tmdb_movies_df
+
+#### Display the first five rows of the tmdb_movies_df dataframe 
+tmdb_movies_df.head()
+
+#### Display the last five rows of the tmdb_movies_df dataframe
+tmdb_movies_df.tail(5)
+
+#### Look at the general tmdb_movies_df dataframe to understand the dimentionality of the dataframe
+tmdb_movies_df.shape
+
+#### Display the type of data the tmdb_movies_df dataframe has and the data types used to store it
+tmdb_movies_df.info()
+
+
+### The Numbers
+
+#### Load and read into the tn.movie_budgets.csv file and display the data in the dataframe
+movie_budgets_df = pd.read_csv('Datasets/tn.movie_budgets.csv')
+movie_budgets_df
+
+#### Display the first five rows of the movie_budgets_df dataframe 
+movie_budgets_df.head()
+
+#### Display the last five rows of the movie_budgets_df dataframe 
+movie_budgets_df.tail(5)
+
+#### Look at the general movie_budgets_df dataframe to understand the dimentionality of the dataframe
+movie_budgets_df.shape
+
+#### Display the type of data the movie_budgets_df dataframe has and the data types used to store it
+movie_budgets_df.info()
+
+- From the above, this made me come to the conclusion of using The Numbers dataset and the Box Office Mojo dataset since they had the relevant data for my analysis.
+
+
+## Data Cleaning
+
+- The relevant datasets that I used after loading and reading into them were the Bom Office Mojo and The Numbers.
+- In order to analyze the data,we need to clean the datasets by checking for missing values and choosing the appropriate method for dealing with the missing values.
+
+### Missing Values
+
+- We start by checking for missing values if any in the datasets.
+
+#### View missing values in the movie_budgets_df dataframe
+movie_budgets_df.isna().sum()
+
+#### View missing values in the bom_movies_df dataframe
+bom_movies_df.isna()
+
+#### Display the total number of missing values in the dataframe
+bom_movies_df.isna().sum()
+
+- The bom_movies_df dataframe has a couple of missing values. We first deal with the Studio column by navigating into it and finding out the specific values in it so as to determine on the method to use to deal with the missing values.
+
+#### Display the value counts of values in the studio column
+bom_movies_df['studio'].value_counts()
+
+#### Display the value counts of missing values in the studio column
+bom_movies_df['studio'].isna().value_counts()
+
+#### Use .loc to display the specific missing values of the studio column
+bom_movies_df.loc[bom_movies_df['studio'].isna(), 'studio']
+
+- We see that the missing values are NaN thus we can drop the values since they do not have a hge significant effect on the dataframe once dropped.
+- The method used is .drop() which drops the missing values in the studio column that you have to subset to specify the column in whose missing values you want dropped.
+
+#### Drop the missing values in the studio column
+bom_movies_df = bom_movies_df.dropna(subset=['studio'])
+bom_movies_df
+
+- Display the dataframe to check if they have been dropped.
+
+#### Display the info of the bom_movies_df dataframe to check if they have been dropped
+bom_movies_df.info()
+
+- Drop also the columns that you feel are not relevant in your analysis. 
+- In this case, I dropped the domestic_gross and foreign_gross columns since they weren't relevant columns needed in this dataframe in my analysis.
+
+#### Drop the irrelevant columns not needed in the dataframe for analysis
+bom_movies_df = bom_movies_df.drop(['domestic_gross', 'foreign_gross'], axis=1)
+bom_movies_df
+
+- Print out the columns of the dataframe to confirm if the columns have been dropped.
+
+#### Print out the columns of the bom_movies_df to check if the irrelevant columns have been dropped
+print(bom_movies_df.columns)
+
+
+### GETTING MOVIES RELEASED WITHIN THE LAST TEN YEARS
+
+- Getting the movies released within the last ten years helps in narrowing down the analysis to a more accurate analysis.
+
+#### Get the movies released on and after 2013
+movie_budgets_df = movie_budgets_df[movie_budgets_df['release_date'].apply(lambda x: int(x.split(" ")[-1]) >=2013)]
+movie_budgets_df
+
+- Converting the datatype of the below columns will aid in the metric calculations used in the analysis bit thus it is crucial to change the datatype.
+- You first have to define a function to replace the placeholders in the values to convert them to numerics so as to be able change the datatype from object to integer.
+
+#### Define a function to change the values in the production_budget, domestic_gross and worlwide_gross into numeric
+def numeric_change(df, column):
+    if df[column].dtype == 'object':
+        df[column] = pd.to_numeric(df[column].str.replace("$"," ").str.replace(",", " ").str.replace(" ", ""))
+    return df
+numeric_change(movie_budgets_df, 'production_budget')
+numeric_change(movie_budgets_df, 'domestic_gross')
+numeric_change(movie_budgets_df, 'worldwide_gross')
+movie_budgets_df
+
+#### Change the datatype of the specified columns from object to integer
+movie_budgets_int_df = movie_budgets_df[['production_budget', 'domestic_gross', 'worldwide_gross']].astype(int)
+movie_budgets_df =  pd.concat([movie_budgets_df.drop(['production_budget', 'domestic_gross', 'worldwide_gross'], axis=1), movie_budgets_int_df], axis=1)
+
+print("updated dataframe:")
+print(movie_budgets_df)
+
+- Confirm whether the datatypes have been changed by displaying the info of the dataframe.
+
+#### Display the info of movie_budgets_df dataframe to check whether the datatypes have changed
+movie_budgets_df.info()
+
+- Merge the two dataframes that are in use to ease the analysis of the data by bringing together the relevant data that is needed in the analysis.
+
+#### Merge the two dataframes, bom_movies_df and movie_budgets_df and display the merged dataframe
+merged_df = pd.merge(bom_movies_df, movie_budgets_df, how='inner', left_on='title', right_on='movie')
+merged_df
+
+- Check the info of the dataframe to confirm whether the merging was successful or not.
+
+#### Display the info of merged_df dataframe to display the datatypes and columns of the new dataframe
+merged_df.info()
+
+## Data Analysis
+
+- The segment focuses on exploring the relationships in the previously prepared data to get recommendations for the business problem.
+- The features used for analysis are:
+            * Gross Profit Margin
+            * Return of Investment
+            * Years
+            * Top 200 movies
+            * Histograms of Gross Profit Margin and Return of Investment
+- Look at the description of the merged dataframe to get a view of the central tendency measures.
+
+#### Check the description of the merged_df to check the central tendency measures of the dataframe
+merged_df.describe()
+
+### How The Year Of The Movie Affects Performance Of Movie
+
+#### Group the data by year and calculate the mean of the worldwide gross
+grouped_df = merged_df.groupby("year")["worldwide_gross"].mean()
+
+#### Plot the bar graph
+grouped_df.plot(kind="bar", figsize=(10, 6), color='orange')
+plt.title("Average Worldwide Gross by Year", fontsize=20)
+plt.xlabel("Year", fontsize=15)
+plt.ylabel("Average Worldwide Gross in millions", fontsize=15)
+plt.show();
+
+![alt text](download.avg.png)
+
+##### Interpretation Of Average Worlwide Gross By Year Bar Graph
+
+- Movies released after 2013 have a higher average worldwide gross.
+- Past movies released before did not perform as well.
+- This shows that the movie studio in this day and age would do well since the perfomance of the movies peaked and the worldwide gross income remained high.
+
+### Studio Effect On Performance Of Movies
+
+#### Group the merged DataFrame by studio and calculate the mean domestic gross for each studio
+grouped_df = merged_df.groupby('studio')['domestic_gross'].mean().sort_values(ascending=False)
+
+#### Plot a bar chart of the mean domestic gross for each studio
+plt.figure(figsize=(20,12))
+plt.bar(grouped_df.index, grouped_df.values, color='maroon')
+plt.xticks(rotation=90)
+plt.xlabel('Studio')
+plt.ylabel('Mean Domestic Gross')
+plt.title('Effect of Studio on Movie Performance')
+plt.show();
+
+![alt text](download.studio2.png)
+
+##### Interpretation of results above
+
+- The best performing studio is Buena Vista, BV.
+- This is a subsidiary of the Walt Disney Company.
+- This analysis could assist in mapping out the most effective strategies to follow by searching out BV's strategy in order to be the most succesful muvie studio.
+- As mentioned before, Microsoft could consult on the best strategies to follow to run a successful studio.
+
+### Top 200 Movies
+
+#### Sort the dataframe by worldwide gross in descending order
+merged_df = merged_df.sort_values('worldwide_gross', ascending=False)
+
+#### Get the top 200 movies
+merged_df = merged_df[:200]
+
+#### Group the dataframe by release date and calculate the average domestic gross and worldwide gross
+grouped = merged_df.groupby('year').agg({'domestic_gross': 'mean', 'worldwide_gross': 'mean'})
+
+#### Plot a bar graph showing the effect of the top 200 movies in the dataframe on the performance of the movie
+grouped.plot(kind='barh', figsize=(12,6), color=['yellow', 'lightblue'])
+plt.title('Effect of Top 200 Movies on Performance', fontsize=20)
+plt.xlabel('Release Date', fontsize=10)
+plt.ylabel('Gross in Millions', fontsize=10)
+plt.show();
+
+![alt text](download.top200.png)
+
+##### Interpretation of results above
+
+- Movies released late into the year have higher domestic and worldwide gross.
+- This indicates that movies peak later on into the year as compared to the beginning of the year.
+- This analysis would help in showing when would be the approrpiate time to release a movie in order to have it having a high performance rate.
+
+### Gross Profit Margin effect on Performance of Movie
+
+- This is a metric that measures the profitability of a company's sales after accounting for the direct costs of producing or acquiring the goods sold.
+- It is calculated as the difference between a company's revenue (or sales) and the cost of goods sold (COGS), divided by revenue, expressed as a percentage.
+- It indicates how much of each dollar of sales is left after deducting the direct costs of producing the goods or services sold. It is an important indicator of a company's operating efficiency and profitability, as it shows the percentage of revenue that is available to cover operating expenses and generate profits.
+
+#### Calculate the gross_profit and the gross_profit_margin and multiply it by 100 and display the dataframe
+merged_df['gross_profit'] = merged_df['worldwide_gross'] - merged_df['production_budget']
+merged_df['gross_profit_margin'] = (merged_df['gross_profit'] / merged_df['worldwide_gross']) * 100
+merged_df
+
+#### Create a scatter plot to visualize worldwide gross vs gross_profit_margin
+fig, ax = plt.subplots(figsize=(20,7))
+
+
+plt.scatter(merged_df['gross_profit_margin'], merged_df['worldwide_gross'], color=['red'])
+plt.xlabel('Gross Profit Margin', fontsize=15)
+plt.ylabel('Worldwide Gross', fontsize=15)
+plt.title('Effect of Gross Profit Margin on Movie Performance', fontsize=20)
+plt.show();
+
+![alt text](download.gpm.png)
+
+##### Interpretation Of Gross Profit Margin Scatter Plot Graph
+
+- The gross profit margin scatter plot shows the relationship between the worldwide gross of a movie and its gross profit margin.
+- There are more movies whose gross profit margin is high and high worldwide gross.
+- The higher the gross profit margin, the more profitable the movie was since the worldwide gross is high.
+
+### Return Of Investment, ROI
+
+- Return of investment is a financial metric that measures the profitability of an investment, typically expressed as a percentage.
+- It is a useful tool for making investment decisions, as it helps investors compare the potential profitability of different investment opportunities.
+
+#### Calculate the return of investment, ROI, and multiply it by 100 then display the dataframe
+merged_df['ROI'] = (merged_df['worldwide_gross'] - merged_df['production_budget']) / merged_df['production_budget'] * 100
+merged_df
+
+#### Create a scatter plot to visualize worldwide gross return of investment 'ROI'
+fig, ax = plt.subplots(figsize=(20,7))
+
+
+plt.scatter(merged_df['ROI'], merged_df['worldwide_gross'], color=['violet'])
+plt.xlabel('Return of Investment, ROI', fontsize=15)
+plt.ylabel('Worldwide Gross', fontsize=15)
+plt.title('Effect of Return of Investment on Movie Performance', fontsize=20)
+plt.show();
+
+![alt text](download.roi.png)
+
+##### Interpretation Of ROI Scatter Plot Graph
+
+- The return of investment scatter plot shows the relationship between the worldwide gross of a movie and its ROI.
+- A higher ROI indicates a more profitable investment, while a negative ROI means that the investment has resulted in a loss.
+- There are more movies whose ROI  is relatively high and has a high worldwide gross.
+- Regardless of it not being very high, it's still relatively high and shows that the perfomance of the movie will be high due to the worldwide gross being high thus having a high ROI.
+
+### Histogram for Gross Profit Margin
+
+#### Plot a histogram to visualize frequency of gross_profit_margin
+fig, ax = plt.subplots(figsize=(20,7))
+
+
+plt.hist(merged_df['gross_profit_margin'], bins=20, color='green')
+plt.title('Histogram of Gross Profit Margin')
+plt.xlabel('Gross Profit Margin')
+plt.ylabel('Frequency')
+plt.show();
+
+![alt text](hist1.png)
+
+##### Iinterpretation Of Gross Profit Margin Histogram
+
+- From the histogram, we see that the majority of movies have a GPM  between 50 and 100 peaking around 75. 
+- This means that for the majority of movies, the production budget is close to or higher than the gross profit.
+- It shows that there is a wide range of GPM values for movies, with a majority of movies falling within the range of 55-98.
+
+### Histogram for ROI
+
+#### Plot a histogram to visualize frequency of ROI
+fig, ax = plt.subplots(figsize=(20,7))
+
+
+plt.hist(merged_df['ROI'], bins=20, color='purple')
+plt.title('Histogram of ROI')
+plt.xlabel('ROI')
+plt.ylabel('Frequency')
+plt.show();
+
+![alt text](hist2.png)
+
+##### Interpretation Of ROI Histogram
+
+- From the histogram, we can see that the majority of movies have an ROI between 0 and 200%, with a peak around 25-50%
+- There are also a few movies with an extremely high ROI, above 1000%, which are outliers in the data.
+- This indicates that while many movies are profitable, there is also a significant number of movies that do not perform well in terms of ROI. It shows the risk and unpredictability involved in the film industry.
+
+### Recommendations
+
+- I would recommend using the gross profit margin and return of investment since they give a more accurate reading, but more inclination towards the ROI metric.
+- This is because movies with a high ROI yield a higher worldwide gross.
+- They should also consider consulting the subsidiary of the Walt Disney Company, Buena Vista in order to get insights on how to better the performance of the movie.
+
+
+# Technologies Used
+
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+
+# Repository Structure
+
+├── Datasets                             <- Data used in the analysis of project 
+|           ├── bom.movie_gross.csv
+|           ├── tn.movie_budgets.csv
+├── Saved Pictures                       <- Images got from the code file
+├── .gitignore                           <- The .gitignore file for the project
+├── LICENSE.md                           <- The license for the project
+├── Presentation.pdf                     <- Presentation of analysis in PDF format
+├── README.md1                           <- Document for reviewing the project
+└── student                              <- Documentation of analysis of project in Jupyter Notebook
+
+
+# For More Information;
+
+- Review student 
